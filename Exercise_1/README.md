@@ -42,7 +42,7 @@ While this suffices for testing, obviously it renders the OCSP stapling configur
 A dhparam file has been generated using the following command:
 `/usr/bin/openssl dhparam  -out /etc/nginx/ssl/dhparam.pem 4096`
 
-This takes a long time to run due to the difficulty of generating random 4096-bit safe primes (given a prime number _n_, _(n - 1) / 2_ is also prime).
+This takes a long time to run due to the difficulty of generating random 4096-bit safe primes (given a prime number $$n$$, $$(n - 1) / 2$$ is also prime).
 
 ### OCSP Stapling
 

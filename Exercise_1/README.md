@@ -45,6 +45,8 @@ A dhparam file has been generated using the following command:
 
 This takes a long time to run due to the difficulty of generating random 4096-bit safe primes (given a prime number _n_, _(n-1)/2_ is also prime).
 
+In the process of researching whether a 4096 bit prime is _really_ necessary, I discovered a service which pre-generates them, here: https://2ton.com.au/dhparam/4096 . No doubt using such pre-generated data would be highlighted as a risk in a production level audit, but they may be useful in testing situations.
+
 ### OCSP Stapling
 
 To verify that OCSP stapling is in place correctly, I used the Let's Encrypt certbot to generate a test certificate using the following command (using the dns-01 challenge method):

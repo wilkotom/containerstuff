@@ -1,0 +1,57 @@
+version: "3.7"
+
+services:
+  nginx-frontend:
+    build: 
+      context: ./nginx
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    depends_on:
+      - db
+    volumes:
+      - type: volume
+        source: nginx-logs
+        target: /var/log/nginx
+      - type: volume
+        source: user-content
+        target: /var/www/html/wp-content/uploads
+      - type: bind
+        source: ./ssl
+        target: /etc/nginx/ssl
+    networks:
+      - private
+    environment:
+      DATABASE: wp_blog
+      DB_USER: wp_user
+      DB_PASSWORD_FILE: /run/secrets/mysql-wp_user
+    secrets:
+      - mysql-wp_user
+
+  db:
+    image: mariadb:latest
+    expose:
+      - "3306"
+    volumes:
+      - type: volume
+        source: db-data
+        target: /var/lib/mysql
+    networks:
+      - private
+    secrets:
+      - mysql-root
+      - mysql-wp_user
+
+secrets:
+  mysql-root:
+      file: ./secrets/mysql-root
+  mysql-wp_user:
+      file: ./secrets/mysql-wp_user
+
+volumes:
+  user-content:
+  db-data:
+  nginx-logs:
+
+networks:
+  private:

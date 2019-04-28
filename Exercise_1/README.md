@@ -33,6 +33,7 @@ SSL Considerations
 SSL certificates for the nginx instance are stored in the `ssl/` folder, which is exported to the nginx instance.
 
 Both self-signed and CA-signed certificates can be used; during testing I generated a self-signed certificate using the following command:
+
 `openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout ./ssl/selfsigned.key -out ./ssl/selfsigned.crt -subj "/C=GB/ST=London/L=London/O=DemoCorp/OU=Org/CN=localhost"`
 
 While this suffices for testing, obviously it renders the OCSP stapling configuration (see below) useless. 
@@ -42,7 +43,7 @@ While this suffices for testing, obviously it renders the OCSP stapling configur
 A dhparam file has been generated using the following command:
 `/usr/bin/openssl dhparam  -out /etc/nginx/ssl/dhparam.pem 4096`
 
-This takes a long time to run due to the difficulty of generating random 4096-bit safe primes (given a prime number $$n$$, $$(n - 1) / 2$$ is also prime).
+This takes a long time to run due to the difficulty of generating random 4096-bit safe primes (given a prime number _n_, _(n-1)/2_ is also prime).
 
 ### OCSP Stapling
 

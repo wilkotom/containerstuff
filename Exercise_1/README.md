@@ -37,7 +37,7 @@ SSL Considerations
 ------------------
 ### SSL Certificates
 
-SSL certificates for the nginx instance are stored in the `ssl/` folder, which is exported to the nginx instance.
+SSL certificates for the nginx instance are stored in the `ssl/` folder, which is exported to the nginx instance. Note that for the purposes of this example
 
 Both self-signed and CA-signed certificates can be used; during testing I generated a self-signed certificate using the following command:
 
@@ -61,6 +61,8 @@ To verify that OCSP stapling is in place correctly, I used the Let's Encrypt cer
 `certbot certonly --manual --preferred-challenges dns -d demo.wilkinson-rowe.name`
 
 Although this only generates a 2048-bit certificate, this is sufficient for a certificate that has a 90-day expiration; certificates of this type are not expected to be regarded as insecure for a further 10 years.
+
+The private key for this certificate is encrypted with a passphrase; this is passed through using Docker's secrets management.
 
 The domain name *demo.wilkinson-rowe.name* has been set up to point to 127.0.0.1. As a result after running `docker-compose up` we can visit https://demo.wilkinson-rowe.name:8443/ in a browser without getting any certificate warnings. 
 

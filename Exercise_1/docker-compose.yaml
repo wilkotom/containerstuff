@@ -27,6 +27,7 @@ services:
       DB_PASSWORD_FILE: /run/secrets/mysql-wp_user
     secrets:
       - mysql-wp_user
+      - nginx-ssl-passphrase
 
   db:
     image: mariadb:latest
@@ -52,6 +53,8 @@ secrets:
       file: ./secrets/mysql-root
   mysql-wp_user:
       file: ./secrets/mysql-wp_user
+  nginx-ssl-passphrase:
+      file: ./secrets/nginx-ssl-passphrase
 
 volumes:
   user-content:

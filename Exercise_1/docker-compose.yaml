@@ -44,6 +44,9 @@ services:
       MYSQL_DATABASE: wp_blog
       MYSQL_PASSWORD_FILE: /run/secrets/mysql-wp_user
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
+    healthcheck:
+      test: ["CMD", "mysql -uroot -p$$(cat /run/secrets/mysql-root) --silent --execute 'SELECT 1;'"]
+      start_period: 15s
     secrets:
       - mysql-root
       - mysql-wp_user

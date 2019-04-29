@@ -1,0 +1,45 @@
+{
+  "family" :"redis-test",
+  "containerDefinitions": [
+    {
+      "portMappings": [
+        {
+          "hostPort": 6379,
+          "protocol": "tcp",
+          "containerPort": 6379
+        }
+      ],
+      "command": [
+        "redis-server",
+        "--appendonly",
+        "yes"
+      ],
+      "cpu": 0,
+      "environment": [],
+      "mountPoints": [
+        {
+          "containerPath": "/data",
+          "sourceVolume": "redis-snapshots"
+        }
+      ],
+      "image": "redis:5-alpine",
+      "name": "redis"
+    }
+  ],
+  "memory": "256",
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "cpu": "1024",
+  "volumes": [
+    {
+      "name": "redis-snapshots",
+      "dockerVolumeConfiguration": {
+        "autoprovision": true,
+        "scope": "shared",
+        "driver": "local"
+      }
+    }
+  ]
+}
+  

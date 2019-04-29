@@ -81,7 +81,7 @@ I have provided a sample Python script which adds an additional key/value pair t
 To run the script:
 
 ```
-$ python3 redis_populate.py --hostname 52.53.254.137
+$ python3 redis_populate.py --hostname 127.0.0.1
 ```
 
 (Note that the script will run with both Python 2 and Python 3 runtimes).

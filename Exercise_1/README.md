@@ -8,7 +8,7 @@ To start the environment, run `docker-compose up`.
 
 You can then visit https://demo.wilkinson-rowe.name:8443/ in a web browser. 
 
-Note that due to the installation hardening, you will be prompted for an HTTP Basic Auth username and password to be given access to the WordPress configuration screen. The default username is _Administrator_ and the default password is _changeit_.
+Note that due to the installation hardening, you will be prompted for an HTTP Basic Auth username and password before being granted access to the WordPress configuration screen. The default username is _Administrator_ and the default password is _changeit_.
 
 *NB* As `docker-compose.yaml` specifies version 3.7 of the file format, a relatively recent version of Docker Engine (18.06.0+) is required. This is in accordance with the specification ("Use latest docker version syntax").
 
@@ -106,13 +106,19 @@ HTTP Tuning / Security Considerations
 ### Nginx 
 
 #### HTTP Headers
-Nginx does not announce the version of the software it is running in the `Server` header, in order to make it more difficult for an attacker to discover potential vulnerabilities. Additionally the following HTTP headers are returned:
+Nginx is configured such that does not announce the version of the software it is running in the `Server` header, in order to make it more difficult for an attacker to discover potential vulnerabilities. 
+
+HTTP/2 has been enabled as this version of the protocol is much more performant.
+
+Additionally the following HTTP headers are returned:
 
 - HTTP Strict Transport Security (`Strict-Transport-Security`)- indicates to a browser that it should never use unencrypted/plain HTTP to communicate with this server
 - `X-Frame-Options: DENY` Prevents this site from being displayed in a frame on another website (preventing clickjacking)
 - `X-Content-Type-Options: nosniff` Indicates that the browser always should use the content of the `Content-Type` header, rather than attempt to use automatic content detection to determine how to handle a response
-- `X-XSS-Protection: 1` Uses the browser's XSS detection capabilities to try to block cross-site scripting attacks.
+- `X-XSS-Protection: 1; mode=block` Uses the browser's XSS detection capabilities to try to block cross-site scripting attacks.
 - `Referrer Policy: same-origin` Requests the browser only supply referrer information when accessing pages of the same site. This prevents (for example) the existence of content which is only visible to logged-in users being divulged to third parties.
+
+Depending on eventual use we should also consider using the `Feature-Policy` and `Content-Security-Policy` headers.
 
 
 #### Microcaching

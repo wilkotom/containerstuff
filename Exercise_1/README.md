@@ -4,7 +4,11 @@ Docker-Compose Wordpress installation using nginx
 Starting the environment
 ------------------------
 
-To start the environment, run `docker-compose up`.
+To start the environment, run `docker-compose up`. 
+
+You can then visit https://demo.wilkinson-rowe.name:8443/ in a web browser. 
+
+Note that due to the installation hardening, you will be prompted for an HTTP Basic Auth username and password to be given access to the WordPress configuration screen. The default username is _Administrator_ and the default password is _changeit_.
 
 *NB* As `docker-compose.yaml` specifies version 3.7 of the file format, a relatively recent version of Docker Engine (18.06.0+) is required. This is in accordance with the specification ("Use latest docker version syntax").
 
@@ -122,6 +126,8 @@ An `X-FastCGI-Cache` header has been added so that we can illustrate the cache i
 #### Access to `wp-admin` and `wp-login.php`
 In order to dissuade brute force attacks attempting to log in to the wordpress interface, basic HTTP Authentication has been enabled. The default username is _Administrator_ and the default password is _changeit_. These can be modified (and should, before exposing the endpoint publically) by updating the htpasswd file under `nginx/wordpress-admin.htpasswd` using a standard htpasswd utility.
 
+We may also choose to only allow access to these pages from a specific IP range, though this makes less sense in the context of a local Docker demonstration.
+
 #### Other Concerns
 
 PHP files which have been uploaded via the WordPress interface to `/wp-content/uploads` are blocked from running. This prevents the upload and then execution of any PHP script which could be used to gain unwanted access to files on the container.
@@ -137,6 +143,6 @@ Were we to split PHP-FPM from nginx (possibly so we could run the containers on 
 
 For the time being I have left the PHP-FPM process manager set to `dynamic`. As I don't have any insight into the level of traffic expected for this site, it seems a sensible tradeoff betwen the possible slow response time to initial requests that might be caused by `ondemand` and the memory intensity (though high speed) of `static`. Performance testing and monitoring should be used to arrive at a more sensible set of tuned settings.
 
-### PHP Execution Timeout
+#### PHP Execution Timeout
 
-I haven't set an explicit timeout in `php.ini` or the PHP-FPM pool configuration; initially the default of 30s seems sensible until sufficient evaluation can be made of desired performance parameters. I have however changed the nginx `fastcgi_read_timeout` setting to match as its default is higher (default of 60s). 
+I haven't set an explicit timeout in `php.ini` or the PHP-FPM pool configuration; initially the default of 30s seems sensible until sufficient evaluation can be made of desired performance parameters - initial research suggests that for some WordPress installations, this timeout needs to be higher. I have however changed the nginx `fastcgi_read_timeout` setting to match as its default is higher (default of 60s). 

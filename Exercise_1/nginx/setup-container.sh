@@ -14,6 +14,5 @@ curl -s https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-confi
 echo "require_once( ABSPATH . 'wp-settings.php' );" >> /var/www/html/wp-config.php
 chown nginx: /var/www/html/wp-content/uploads
 mkdir -p /run/php
-/wait-for db:3306 
 /usr/sbin/php-fpm7 -D
 /wait-for db:3306 && nginx -g 'daemon off;';

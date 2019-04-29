@@ -1,6 +1,13 @@
 Docker-Compose Wordpress installation using nginx
 =================================================
 
+Starting the environment
+------------------------
+
+To start the environment, run `docker-compose up`.
+
+*NB* As `docker-compose.yaml` specifies version 3.7 of the file format, a relatively recent version of Docker Engine (18.06.0+) is required. This is in accordance with the specification ("Use latest docker version syntax").
+
 Structure
 ---------
 
@@ -110,8 +117,8 @@ Nginx microcaching (caching responses for up to 1m) for PHP responses has been e
 
 An `X-FastCGI-Cache` header has been added so that we can illustrate the cache is working correctly. In production use we may choose to obfuscate this, or leave it out entirely.
 
-#### Access to `wp-admin`
-In order to dissuade brute force attacks attempting to log in to the admin interface `/wp-admin`, basic HTTP Authentication has been enabled. The default username is _Administrator_ and the default password is _changeit_. These can be modified (and should, before exposing the endpoint publically) by updating the htpasswd file under `nginx/wordpress-admin.htpasswd` using a standard htpasswd utility.
+#### Access to `wp-admin` and `wp-login.php`
+In order to dissuade brute force attacks attempting to log in to the wordpress interface, basic HTTP Authentication has been enabled. The default username is _Administrator_ and the default password is _changeit_. These can be modified (and should, before exposing the endpoint publically) by updating the htpasswd file under `nginx/wordpress-admin.htpasswd` using a standard htpasswd utility.
 
 #### Other Concerns
 

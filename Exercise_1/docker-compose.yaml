@@ -38,6 +38,11 @@ services:
         target: /var/lib/mysql
     networks:
       - private
+    environment:
+      MYSQL_USER: wp_user
+      MYSQL_DATABASE: wp_blog
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql-wp_user
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql-root
     secrets:
       - mysql-root
       - mysql-wp_user

@@ -41,7 +41,7 @@ SSL Considerations
 ------------------
 ### SSL Certificates
 
-SSL certificates for the nginx instance are stored in the `ssl/` folder, which is exported to the nginx instance. Note that for the purposes of this example
+SSL certificates for the nginx instance are stored in the `ssl/` folder, which is exported to the nginx instance.
 
 Both self-signed and CA-signed certificates can be used; during testing I generated a self-signed certificate using the following command:
 
